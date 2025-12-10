@@ -1,3 +1,5 @@
+Preprint: https://doi.org/10.1101/2025.11.25.690602 
+
 # Bursts of reproduction can create genetic structure in bacterial populations
 
 Coalescent simulations in msprime.
