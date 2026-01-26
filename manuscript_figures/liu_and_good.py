@@ -24,7 +24,7 @@ beta_index = "151"
 blk_size = 1000 # for analytical prediction
 recomb_status_palette = {
     "Fully clonal": (1.0, 0.8784, 0.0),
-    "Partially\nrecombined": sns.color_palette()[1],
+    "Partially recombined": sns.color_palette()[1],
     "Fully recombined": sns.color_palette()[0]
 }
 ###
@@ -66,7 +66,13 @@ axes["A"].text(-0.05, 1.06, r"$\textbf{A}$", transform=axes["A"].transAxes,
 axes["A"].set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
 fig.text(0.28, 0.91, "Kingman", ha="center")
 
-palette = sns.color_palette("rocket_r", n_colors=5)
+palette = sns.color_palette("plasma", n_colors=5)
+# palette = sns.color_palette("PuOr", n_colors=5)
+# palette[2] = (160/255, 102/255, 88/255)
+# palette[1] = palette[0]
+# palette[0] = (220/255, 69/255, 0/255)
+# palette[3] = palette[4]
+# palette[4] = (205/255, 71/255, 120/255)
 for kingman_index, color in zip(kingman_indices, palette):
     input_path = "runs/" + kingman_index
     with open(input_path + ".json", "r") as file:
@@ -126,13 +132,13 @@ with open(input_path + "_frac_clonal", "rb") as file:
 frac_clonal, _ = map(np.array, zip(*clonal_tmrca))
 recomb_status = [
     "Fully recombined" if frac == 0 
-    else "Partially\nrecombined" if 0 < frac < 1 
+    else "Partially recombined" if 0 < frac < 1 
     else "Fully clonal" 
     for frac in frac_clonal
 ]
 
 # BC points
-sns.scatterplot(x=frac_iden_blk, y=dist, hue=recomb_status, hue_order=["Fully clonal", "Partially\nrecombined", "Fully recombined"], palette=recomb_status_palette, ax=axes["B"], s=14)
+sns.scatterplot(x=frac_iden_blk, y=dist, hue=recomb_status, hue_order=["Fully clonal", "Partially recombined", "Fully recombined"], palette=recomb_status_palette, ax=axes["B"], s=14)
 
 # legend adjustments 2
 sns.move_legend(axes["B"], "upper left")
@@ -160,7 +166,7 @@ axes["B"].plot(r_x, r_y,
                path_effects=[pe.Stroke(linewidth=1.5, foreground='white'), pe.Normal()])
 
 # BC marginal histogram
-sns.histplot(y = dist, bins=50, ax = axes["C"],hue=recomb_status, multiple="stack", hue_order=["Fully clonal", "Partially\nrecombined", "Fully recombined"], palette=recomb_status_palette, stat="probability", legend=False)
+sns.histplot(y = dist, bins=50, ax = axes["C"],hue=recomb_status, multiple="stack", hue_order=["Fully clonal", "Partially recombined", "Fully recombined"], palette=recomb_status_palette, stat="probability", legend=False)
 
 # settings
 axes["B"].set_yticks([0.0, 0.01, 0.02, 0.03, 0.04])
@@ -173,7 +179,7 @@ axes["C"].set_xticks([])
 
 alpha = params["alpha"]
 fig.text(0.63, 0.91, f"Run 4B -- Beta ($\\alpha = {alpha:.3g}$)", ha="center")
-fig.text(0.5, -0.01, "Fraction of 1 kb blocks identical ($f$)", ha="center")
+fig.text(0.5, -0.01, "Fraction of identical 1 kb blocks($f$)", ha="center")
 fig.text(0.06, 0.5, "Pairwise genetic distance ($d$)", rotation="vertical", va="center")
 
 if save_fig:

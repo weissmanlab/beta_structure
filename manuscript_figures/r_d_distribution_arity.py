@@ -3,6 +3,9 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import matplotlib as mpl
+import matplotlib.colors as mcolors
+import matplotlib.cm as cm
 import scienceplots
 plt.style.use("science")
 plt.rcParams.update({
@@ -123,7 +126,7 @@ for label, cdf, title, in zip(["A", "B", "C", "D"], cdfs, titles):
     if label == "D":
         beta_df = rcdf_df[rcdf_df["model"] == r"Beta ($\alpha = 1.1$)"]
 
-        for arrow_run, arrow_label in zip(indiv_runs_arrow, ["3A", "3B", "3C"]):
+        for arrow_run, arrow_label in zip(indiv_runs_arrow, ["4A", "4B", "4C"]):
             with open(arrow_run + "_rd", "r") as file:
                 arrow_r_d = float(file.read())
 
@@ -152,51 +155,84 @@ for label, cdf, title, in zip(["A", "B", "C", "D"], cdfs, titles):
 df = pd.read_csv("runs_mass/mass_sim_arity.csv", header=None, index_col=None)
 df.columns = ["arity", "T", "r_d"]
 
-sns.scatterplot(x = df["r_d"], y = df["T"], hue = df["arity"], palette = "flare", ax = axes["E"], s=25)
+base_cmap = mpl.colormaps["flare"]
+
+resampling_indices = np.linspace(0, 1, 256)**(0.5) # sqrt transformation
+new_flare = mcolors.ListedColormap(base_cmap(resampling_indices))
+
+norm = mcolors.Normalize(
+    vmin=df["r_d"].min(),
+    vmax=df["r_d"].max(),
+)
+
+df = df.sort_values("r_d")
+
+sns.scatterplot(
+    x=df["arity"],
+    y=df["T"],
+    hue=df["r_d"],
+    palette=new_flare,
+    edgecolor="none",
+    hue_norm=norm,
+    ax=axes["E"],
+    s=25,
+    legend=False
+)
+
+sm = cm.ScalarMappable(norm=norm, cmap=new_flare)
+
+cax = fig.add_axes([0.84, 0.58, 0.015, 0.25])
+cbar = fig.colorbar(sm, cax=cax)
+
+ticks=[0.0,0.1,0.2,0.3]
+cbar.set_ticks(ticks)
+cbar.set_ticklabels([f"{t:.1f}" for t in ticks])
+
+cbar.ax.set_title(r"$r_d$", rotation=0)
 
 axes["E"].set_ylim(-0.01, 1.01)
-axes["E"].set_xscale("log")
+# axes["E"].set_xscale("log")
 axes["E"].set_xlabel("")
 axes["E"].set_ylabel("Time of largest burst")
-axes["E"].legend(title="Lineages captured\nin largest burst")
+# axes["E"].legend(title="$\\bar r_d$")
 axes["E"].set_title(r"$\rho = 45$, Beta ($\alpha = 1.1$)")
 
 axes["E"].text(-0.05, 1.05, r"$\textbf{E}$", transform=axes["E"].transAxes, 
                fontweight="bold", va="top", ha="left")
 
 ### arrows to individual runs
-for arrow_run, arrow_label in zip(indiv_runs_arrow, ["3A", "3B", "3C"]):
-    with open(arrow_run + "_rd", "r") as file:
-        x_target = float(file.read())
+for arrow_run, arrow_label in zip(indiv_runs_arrow, ["4A", "4B", "4C"]):
     with open(arrow_run + "_biggestburst", "r") as file:
         line = file.readline().strip()
         max_arity, biggest_burst_T = line.split(",")
+        x_target = int(max_arity)
         y_target = float(biggest_burst_T)
 
-    if arrow_label == "3A":
+    if arrow_label == "4A":
         axes["E"].annotate(
             arrow_label,
             xy=(x_target, y_target),
-            xytext=(x_target + 0.003, y_target),
+            xytext=(x_target + 3, y_target + 0.1),
             arrowprops=dict(arrowstyle="->")
         )
-    elif arrow_label == "3B":
+    elif arrow_label == "4B":
         axes["E"].annotate(
             arrow_label,
             xy=(x_target, y_target),
-            xytext=(x_target + 0.03, y_target + 0.04),
+            xytext=(x_target + 3, y_target + 0.1),
             arrowprops=dict(arrowstyle="->")
         )
     else: 
         axes["E"].annotate(
             arrow_label,
             xy=(x_target, y_target),
-            xytext=(x_target + 0.1, y_target + 0.08),
+            xytext=(x_target + 1, y_target + 0.1),
             arrowprops=dict(arrowstyle="->")
         )
 
 sns.move_legend(axes["C"], "upper right")
-fig.text(0.5, 0.00, "Normalized index of association ($\\bar r_d$)", ha="center")
+fig.text(0.33, 0.00, "Normalized index of association ($\\bar r_d$)", ha="center")
+fig.text(0.73, 0.00, "Size of largest burst (lineages captured)", ha="center")
 fig.text(0.09, 0.5, "Probability", va="center", rotation="vertical")
 
 if save_fig:
