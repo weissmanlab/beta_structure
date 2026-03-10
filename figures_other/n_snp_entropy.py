@@ -3,9 +3,6 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 import scienceplots
-from pathlib import Path
-BASE_DIR = Path(__file__).parent
-
 plt.style.use("science")
 plt.rcParams.update({
     "font.size": 10,
@@ -62,6 +59,6 @@ fig.text(0.5, 0.00, "Number of strains n", ha="center")
 fig.subplots_adjust(left=0.15, bottom=0.15)
 
 if save_fig:
-    plt.savefig(BASE_DIR / "../../figures/manuscript/n_snp_entropy.png", dpi=500, bbox_inches = "tight")
+    plt.savefig("../figures/manuscript/n_snp_entropy.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()

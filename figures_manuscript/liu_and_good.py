@@ -5,9 +5,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 from matplotlib.lines import Line2D
-from pathlib import Path
-BASE_DIR = Path(__file__).parent
-
 import scienceplots
 plt.style.use("science")
 plt.rcParams.update({
@@ -186,6 +183,6 @@ fig.text(0.5, -0.01, "Fraction of identical 1 kb blocks($f$)", ha="center")
 fig.text(0.06, 0.5, "Pairwise genetic distance ($d$)", rotation="vertical", va="center")
 
 if save_fig:
-    plt.savefig(BASE_DIR / "../../figures/manuscript/liu_and_good.png", dpi=500, bbox_inches = "tight")
+    plt.savefig("../figures/manuscript/liu_and_good.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()
