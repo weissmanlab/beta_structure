@@ -1,6 +1,8 @@
 import msprime
 import scipy
 import numpy as np
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
 
 nsample = 10
 l = 1
@@ -24,7 +26,7 @@ ts = msprime.sim_ancestry(
 
 tree_svg = draw_svg_func()
 
-with open("../figures/kingman.svg", "w") as f:
+with open(BASE_DIR / "../../figures/manuscript/kingman.svg", "w") as f:
     f.write(tree_svg)
 
 def T2(a, N):
@@ -46,5 +48,5 @@ ts = msprime.sim_ancestry(
 
 tree_svg = draw_svg_func()
 
-with open("../figures/beta.svg", "w") as f:
+with open(BASE_DIR / "../../figures/manuscript/beta.svg", "w") as f:
     f.write(tree_svg)

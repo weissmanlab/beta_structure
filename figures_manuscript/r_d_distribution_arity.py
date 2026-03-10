@@ -6,6 +6,9 @@ from matplotlib.lines import Line2D
 import matplotlib as mpl
 import matplotlib.colors as mcolors
 import matplotlib.cm as cm
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
+
 import scienceplots
 plt.style.use("science")
 plt.rcParams.update({
@@ -236,6 +239,6 @@ fig.text(0.73, 0.00, "Size of largest burst (lineages captured)", ha="center")
 fig.text(0.09, 0.5, "Probability", va="center", rotation="vertical")
 
 if save_fig:
-    plt.savefig("../figures/r_d_distribution.png", dpi=500, bbox_inches = "tight")
+    plt.savefig(BASE_DIR / "../../figures/manuscript/r_d_distribution.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()

@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from sklearn.manifold import MDS
 from scipy.spatial.distance import squareform
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
+
 import scienceplots
 plt.style.use("science")
 plt.rcParams.update({
@@ -117,6 +120,6 @@ fig.text(0.5, 0.00, "Pairwise genetic distance ($d$)", ha="center")
 fig.subplots_adjust(left=0.15, bottom=0.15)
 
 if save_fig:
-    plt.savefig("../figures/kingman_progression.png", dpi=500, bbox_inches = "tight")
+    plt.savefig(BASE_DIR / "../../figures/manuscript/kingman_progression.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()

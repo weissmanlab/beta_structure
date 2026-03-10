@@ -3,6 +3,8 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 import scienceplots
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
 
 plt.style.use("science")
 plt.rcParams.update({
@@ -45,7 +47,7 @@ for label, run_path in zip(["A", "B", "C", "D"], run_paths):
     rho = 2 * params["r"] * params["tract_length"] * params["KT_2"]
     alpha = params["alpha"]
     if label == "D":
-        ax.set_title(f"3B\nBeta ($\\alpha = {alpha:.3g}, \\rho = {rho:.3g}$)")
+        ax.set_title(f"4B\nBeta ($\\alpha = {alpha:.3g}, \\rho = {rho:.3g}$)")
     else:
         ax.set_title(f"Kingman ($\\rho$ = {rho:.3g})")
 
@@ -60,6 +62,6 @@ fig.text(0.5, 0.00, "Number of strains n", ha="center")
 fig.subplots_adjust(left=0.15, bottom=0.15)
 
 if save_fig:
-    plt.savefig("../figures/n_snp_entropy.png", dpi=500, bbox_inches = "tight")
+    plt.savefig(BASE_DIR / "../../figures/manuscript/n_snp_entropy.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()

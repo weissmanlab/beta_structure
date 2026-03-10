@@ -2,6 +2,9 @@ import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
+
 import scienceplots
 plt.style.use("science")
 plt.rcParams.update({
@@ -70,6 +73,9 @@ for label, peak, input_path in zip(["D", "E", "F"], peaks, paths):
         bins=bin_edges, multiple="stack", stat="probability",
         palette=color_dict, legend=(label=="D"), ax=ax
     )
+    for patch in ax.patches:
+        if patch.get_x() > 0.01:
+            patch.set_facecolor("grey")
 
     ax.text(-0.1, 1.1, rf"$\textbf{{{label}}}$", transform=ax.transAxes, fontweight="bold", va="top", ha="left")
     ax.set_title(peak)
@@ -79,6 +85,6 @@ for label, peak, input_path in zip(["D", "E", "F"], peaks, paths):
 
 fig.text(0.5, -0.04, "Pairwise genetic distance ($d$) of segments", ha="center")
 if save_fig:
-    plt.savefig("../figures/151_segments_tmrcas.png", dpi=500)
+    plt.savefig(BASE_DIR / "../../figures/manuscript/151_segments_tmrcas.png", dpi=500)
 else:
     plt.show()

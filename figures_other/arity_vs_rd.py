@@ -2,6 +2,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import scienceplots
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
 
 plt.style.use("science")
 plt.rcParams.update({
@@ -45,7 +47,7 @@ plt.ylabel("T of burst")
 plt.legend(title="Lineages captured\nin largest burst")
 
 if save_fig:
-    plt.savefig("../figures/arity_vs_rd.png", dpi=500, bbox_inches = "tight")
+    plt.savefig(BASE_DIR / "../../figures/manuscript/arity_vs_rd.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()
 

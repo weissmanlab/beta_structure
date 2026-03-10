@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import scienceplots
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
 
 plt.style.use("science")
 plt.rcParams.update({
@@ -145,6 +147,6 @@ fig.text(0.09, 0.5, "Probability", va="center", rotation="vertical")
 fig.subplots_adjust(left=0.15, bottom=0.15)
 
 if save_fig:
-    plt.savefig("../figures/r_d_distribution.png", dpi=500, bbox_inches = "tight")
+    plt.savefig(BASE_DIR / "../../figures/manuscript/r_d_distribution.png", dpi=500, bbox_inches = "tight")
 else:
     plt.show()

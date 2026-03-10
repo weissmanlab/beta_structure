@@ -6,6 +6,8 @@ typings/
 presentation/
 explore.py
 output*
+aps_figures/*
+figures_talk
 
 runs*/**
 
