@@ -22,8 +22,13 @@ with open(input_path + "_frac_iden_blk", "rb") as file:
 with open(input_path + "_dist", "rb") as file:
     dist = pickle.load(file)
 
-avg_dist = np.mean(dist)
-print("Average pi:", avg_dist)
+S_burst, T_burst = open(input_path + "_largest_burst").read().strip().split(",")
+S_burst = int(S_burst)
+T_burst = float(T_burst)
+
+avg_f = np.mean(frac_iden_blk)
+avg_d = np.mean(dist)
+print("Average pi:", avg_d)
 
 ### NULL POINTS
 null_index = "r001"
@@ -40,7 +45,7 @@ g = sns.jointplot(
     height=6, 
     space=0,
     xlim=(0,1),
-    ylim=(0,0.105),
+    ylim=(0,0.041),
     marginal_kws={"bins": 160}
 )
 
@@ -53,25 +58,41 @@ n_y = -1/blk_size * np.log(n_x)
 g.ax_joint.plot(n_x, n_y, color='grey', linestyle='--')
 
 ## RECOMBINANT LINE
-def expected_dist(f):
+def expected_dist(f, avg_d):
     mu     = params["mu"]
     r      = params["r"]
     t      = params["tract_length"]
 
     # per base rate of replacement by recombination
-    R = r * (t) * np.exp(-blk_size/t)
+    # R = r * (t) * np.exp(-blk_size/t)
+    R = r * (t)
 
     denom = R + mu * blk_size
 
-    # recombination‐driven divergence + clonal (mutational) divergence
-    term_recomb = avg_dist * (1 - f**(R/denom))
-    term_mut    = f**(R/denom) * (1 - f**(mu/denom))
+    term_recomb = avg_d * (1 - f**(R/denom)) # SNPs introduced by recombination
+    term_mut    = f**(R/denom) * ((mu)*np.log(f))/denom # SNPs introduced by mutation
 
-    return term_recomb + term_mut
+    return term_recomb - term_mut
 
 r_x = np.linspace(1e-10, 1, 1000)
-r_y = expected_dist(r_x)
+r_y = expected_dist(r_x, avg_d)
 g.ax_joint.plot(r_x, r_y, color='red', linestyle='--')
+
+
+def adjusted_expected_dist(f):
+    mu     = params["mu"]
+
+    # # ORIGINAl
+    # avg_d_cond = 0.029
+    # return avg_d_cond - (f*np.exp(2*mu*blk_size*T_burst))*(avg_d_cond - 2*mu*T_burst)
+    # REANCHORED:
+    return avg_d - ((f - avg_f) * (avg_d - 2 * mu * T_burst))/(np.exp(-2*mu*blk_size*T_burst)-avg_f)
+
+adjusted_r_x = np.linspace(1e-10, 1, 1000)
+adjusted_r_y = adjusted_expected_dist(adjusted_r_x)
+g.ax_joint.plot(adjusted_r_x, adjusted_r_y, 
+               linestyle='--', 
+               color="black")
 
 ## labels
 g.set_axis_labels("Proportion of 1kb base blocks identical", 
