@@ -1,8 +1,6 @@
 # Bursts of reproduction can create genetic structure in frequently recombining bacterial populations
 
-Preprint: https://doi.org/10.1101/2025.11.25.690602
-
-Manuscript figures in `manuscript_figures/`
+Manuscript figures in `figures_manuscript/`
 - Fig 1: `example_tree.py`
 - Fig 2: `kingman_progression.py`
   - Run parameters and seeds in `runs/*`
@@ -13,4 +11,5 @@ Manuscript figures in `manuscript_figures/`
 - Fig 6: `liu_and_good.py`
 
 Simulation code in `cluster/sim.py` <br>
-Exploratory plotting in `./plt_*` and `other_figures/`<br>
+Code for computing statistics in `cluster/` <br>
+Exploratory plotting in `./plt_*` and `figures_others/`<br>
