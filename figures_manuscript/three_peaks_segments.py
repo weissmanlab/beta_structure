@@ -70,9 +70,9 @@ for label, peak, input_path in zip(["D", "E", "F"], peaks, paths):
         bins=bin_edges, multiple="stack", stat="probability",
         palette=color_dict, legend=(label=="D"), ax=ax
     )
-    for patch in ax.patches:
-        if patch.get_x() > 0.01:
-            patch.set_facecolor("grey")
+    # for patch in ax.patches:
+    #     if patch.get_x() > 0.01:
+    #         patch.set_facecolor("grey")
 
     ax.text(-0.1, 1.1, rf"$\textbf{{{label}}}$", transform=ax.transAxes, fontweight="bold", va="top", ha="left")
     ax.set_title(peak)

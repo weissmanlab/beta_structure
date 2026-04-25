@@ -188,7 +188,7 @@ ticks=[0.0,0.1,0.2,0.3]
 cbar.set_ticks(ticks)
 cbar.set_ticklabels([f"{t:.1f}" for t in ticks])
 
-cbar.ax.set_title(r"$r_d$", rotation=0)
+cbar.ax.set_title(r"$\bar r_d$", rotation=0)
 
 axes["E"].set_ylim(-0.01, 1.01)
 # axes["E"].set_xscale("log")

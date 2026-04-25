@@ -22,7 +22,6 @@ plt.rcParams.update({
 save_fig = True
 run_indices = ["unstructured_beta", "151", "119"]
 recomb_status_palette = {
-    "Fully clonal": (1.0, 0.8784, 0.0),
     "Partially\nrecombined": sns.color_palette()[1],
     "Fully\nrecombined": sns.color_palette()[0]
 }
@@ -54,8 +53,7 @@ def load_run(run_index):
 
     recomb_status = [
         "Fully\nrecombined" if frac == 0 
-        else "Partially\nrecombined" if 0 < frac < 1 
-        else "Fully clonal" 
+        else "Partially\nrecombined"
         for frac in frac_clonal
     ]
 
@@ -99,7 +97,7 @@ for label, run_index in zip(["A", "B", "C"], run_indices):
     ## main histogram
     sns.histplot(
         x=dist, stat="probability", hue=recomb_status,
-        bins=bin_edges, multiple="stack", hue_order=["Fully clonal", "Partially\nrecombined", "Fully\nrecombined"],
+        bins=bin_edges, multiple="stack", hue_order=["Partially\nrecombined", "Fully\nrecombined"],
         ax=ax, palette=recomb_status_palette, legend = (label == "A")
     )
 

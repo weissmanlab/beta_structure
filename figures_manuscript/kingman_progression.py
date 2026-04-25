@@ -110,6 +110,7 @@ for label, run_index in zip(["A", "B", "C", "D"], run_indices):
         ax.set_ylabel("")
     ax.xaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
     ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.1f"))
+    # ax.minorticks_off()
 
 sns.move_legend(axes["D"], "lower left")
 
