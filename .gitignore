@@ -9,6 +9,7 @@ output*
 aps_figures/*
 figures_talk
 figures_honors
+cluster/*.sh
 
 runs*/**
 
