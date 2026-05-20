@@ -1,15 +1,25 @@
 # Bursts of reproduction can create genetic structure in frequently recombining bacterial populations
 
-Manuscript figures in `figures_manuscript/`
+Simulation parameters and seeds are stored as `.json` files.<br>
+
+Scripts to generate figures in `figures_manuscript/`
 - Fig 1: `example_tree.py`
 - Fig 2: `kingman_progression.py`
-  - Seeds and parameters of plotted simulation runs in `runs/*`
+  - Runs in `runs/*`
 - Fig 3: `r_d_distribution_arity.py`
+  - Runs simulated with `cluster/mass_sim_arity.py`
 - Fig 4: `structure_platter.py`
-  - Seeds and parameters of plotted simulation runs in `runs_structured/*`
+  - Runs in `runs_structured/*`
 - Fig 5: `three_peaks_segments.py`
+  - Values in subplots D, E, and F computed using `pair_segments.py`
 - Fig 6: `liu_and_good.py`
+  - Runs in `runs/*` and `runs_structured/151.json`
+  - Fraction of identical blocks computed using `cluster/frac_iden_blk.py`
 
-Simulation code in `cluster/sim.py` <br>
-Other code for computing statistics (and slurm scripts) in `cluster/` <br>
-Exploratory plotting in `./plt_*` and `figures_others/`<br>
+Additionally, many scripts were reused across many figures for common tasks:
+- Simulations run using `cluster/sim.py`.<br>
+- Pairwise distances computed using `cluster/dist.py`
+- $$\bar r_d$$ computed using `cluster/rd.py`
+- Fraction of a pair's genome clonally inherited using `cluster/frac_clonal.py`
+
+Some extra scripts for exploratory/miscellaneous plotting in  `./plt_*` and `figures_others/`<br>
