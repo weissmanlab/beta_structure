@@ -1,4 +1,8 @@
-# Bursts of reproduction can create genetic structure in frequently recombining bacterial populations
+This repo contains simulation and analysis code for the manuscript:
+
+Jiang, C. J., & Weissman, D. B. (2026). Bursts of reproduction can create genetic structure in frequently recombining bacterial populations. GENETICS. https://doi.org/10.1093/genetics/iyag132
+
+# Project organization
 
 Simulation parameters and seeds are stored as `.json` files.<br>
 
